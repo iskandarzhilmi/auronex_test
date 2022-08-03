@@ -12,7 +12,7 @@ class HomeFetched extends HomeEvent {}
 class HomeUserDeleted extends HomeEvent {
   final int id;
 
-  HomeUserDeleted({required this.id});
+  const HomeUserDeleted({required this.id});
 
   @override
   List<Object> get props => [id];

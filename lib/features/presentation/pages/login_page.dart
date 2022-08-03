@@ -1,7 +1,5 @@
-import 'dart:developer';
 
 import 'package:auronex_test/features/presentation/bloc/login_bloc.dart';
-import 'package:bot_toast/bot_toast.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -25,7 +23,7 @@ class _LoginPageState extends State<LoginPage> {
         if (state.loginState is LoginAuthenticated) {
           Navigator.of(context).pushReplacement(
             MaterialPageRoute(
-              builder: (context) => HomePage(),
+              builder: (context) => const HomePage(),
             ),
           );
         }
@@ -42,14 +40,14 @@ class _LoginPageState extends State<LoginPage> {
               children: <Widget>[
                 TextField(
                   controller: usernameController,
-                  decoration: InputDecoration(
+                  decoration: const InputDecoration(
                     labelText: 'Username',
                   ),
                 ),
                 TextField(
                   controller: passwordController,
                   obscureText: true,
-                  decoration: InputDecoration(
+                  decoration: const InputDecoration(
                     labelText: 'Password',
                   ),
                 ),

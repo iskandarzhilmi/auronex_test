@@ -1,7 +1,5 @@
 import 'package:auronex_test/features/home/data/models/user_model.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/foundation/key.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../bloc/detail_bloc.dart';
@@ -20,7 +18,9 @@ class _DetailPageState extends State<DetailPage> {
   Widget build(BuildContext context) {
     return BlocConsumer<DetailBloc, DetailStateModel>(
       listener: (context, state) {
-        // TODO: implement listener
+        if (state.state is DetailSuccess) {
+          Navigator.pop(context);
+        }
       },
       builder: (context, state) {
         return Form(
@@ -28,12 +28,25 @@ class _DetailPageState extends State<DetailPage> {
             appBar: AppBar(
               title: const Text('Detail Page'),
             ),
-            floatingActionButton: FloatingActionButton(
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-              child: const Text('Edit'),
-            ),
+            floatingActionButton: widget.user.id != null
+                ? FloatingActionButton(
+                    onPressed: () {
+                      context.read<DetailBloc>().add(
+                            DetailUpdateButtonPressed(
+                              user: widget.user,
+                            ),
+                          );
+                    },
+                    child: const Text('Edit'),
+                  )
+                : FloatingActionButton(
+                    onPressed: () {
+                      context.read<DetailBloc>().add(
+                            DetailCreateButtonPressed(user: widget.user),
+                          );
+                    },
+                    child: const Text('Create'),
+                  ),
             floatingActionButtonLocation:
                 FloatingActionButtonLocation.centerFloat,
             body: SingleChildScrollView(

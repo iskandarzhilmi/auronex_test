@@ -55,8 +55,6 @@ class HomeBloc extends Bloc<HomeEvent, HomeStateModel> {
         homeState: HomeLoading(),
       ));
 
-      // BotToast.showLoading();
-
       var deleteResult =
           await Dio().delete('https://reqres.in/api/users/${event.id}');
 
@@ -82,7 +80,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeStateModel> {
       BotToast.showText(text: 'Delete failed.');
       // BotToast.showText(text: e.toString());
     } finally {
-      // BotToast.closeAllLoading();
+      BotToast.closeAllLoading();
     }
   }
 }

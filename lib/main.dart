@@ -38,7 +38,7 @@ class MyApp extends StatelessWidget {
           if (state.loginState is LoginUnauthenticated) {
             Navigator.of(context).pushReplacement(
               MaterialPageRoute(
-                builder: (context) => LoginPage(),
+                builder: (context) => const LoginPage(),
               ),
             );
           }
@@ -46,7 +46,7 @@ class MyApp extends StatelessWidget {
             Navigator.pushReplacement(
               context,
               MaterialPageRoute(
-                builder: (context) => HomePage(),
+                builder: (context) => const HomePage(),
               ),
             );
           }

@@ -1,5 +1,6 @@
 import 'dart:developer';
 
+import 'package:auronex_test/features/home/data/models/user_model.dart';
 import 'package:auronex_test/features/home/presentation/bloc/home_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -24,6 +25,24 @@ class _HomePageState extends State<HomePage> {
       appBar: AppBar(
         title: const Text('Home Page'),
       ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) {
+                return DetailPage(
+                  user: UserModel.empty(),
+                );
+              },
+            ),
+          ).then((_) {
+            context.read<HomeBloc>().add(HomeFetched());
+          });
+        },
+        child: const Icon(Icons.add),
+      ),
       body: Stack(
         children: [
           BlocConsumer<HomeBloc, HomeStateModel>(
@@ -34,9 +53,9 @@ class _HomePageState extends State<HomePage> {
               );
 
               if (state.homeState is HomeLoading) {
-                content = SizedBox(
+                content = const SizedBox(
                   height: 100,
-                  child: const Center(
+                  child: Center(
                     child: CircularProgressIndicator(),
                   ),
                 );
@@ -44,7 +63,6 @@ class _HomePageState extends State<HomePage> {
                       HomeFetched(),
                     );
               }
-
               if (state.homeState is HomeLoaded) {
                 content = ListView.builder(
                   shrinkWrap: true,
@@ -53,10 +71,10 @@ class _HomePageState extends State<HomePage> {
                     var user = state.userList![index];
                     return ListTile(
                       leading: CircleAvatar(
-                        backgroundImage: NetworkImage(user.avatar),
+                        backgroundImage: NetworkImage(user.avatar!),
                       ),
                       title: Text('${user.firstName} ${user.lastName}'),
-                      subtitle: Text(user.email),
+                      subtitle: Text(user.email!),
                       trailing: Row(
                         mainAxisSize: MainAxisSize.min,
                         children: [
@@ -69,22 +87,24 @@ class _HomePageState extends State<HomePage> {
                                     user: user,
                                   ),
                                 ),
-                              );
+                              ).then((_) {
+                                context.read<HomeBloc>().add(HomeFetched());
+                              });
                             },
-                            icon: Icon(
+                            icon: const Icon(
                               Icons.edit,
                               color: Colors.blue,
                             ),
                           ),
                           IconButton(
-                              icon: Icon(
+                              icon: const Icon(
                                 Icons.delete,
                                 color: Colors.red,
                               ),
                               onPressed: () {
                                 log('Delete user ${user.id}');
                                 context.read<HomeBloc>().add(
-                                      HomeUserDeleted(id: user.id),
+                                      HomeUserDeleted(id: user.id!),
                                     );
                               }),
                         ],
@@ -99,13 +119,12 @@ class _HomePageState extends State<HomePage> {
                   padding: const EdgeInsets.all(8.0),
                   child: Column(
                     children: [
-                      Text('Home Page'),
                       ElevatedButton(
                         child: const Text('Logout'),
                         onPressed: () {
                           Navigator.of(context).pushReplacement(
                             MaterialPageRoute(
-                              builder: (context) => LoginPage(),
+                              builder: (context) => const LoginPage(),
                             ),
                           );
                           context.read<LoginBloc>().add(
@@ -113,7 +132,7 @@ class _HomePageState extends State<HomePage> {
                               );
                         },
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 16,
                       ),
                       ElevatedButton(
@@ -122,9 +141,11 @@ class _HomePageState extends State<HomePage> {
                                 HomeFetched(),
                               );
                         },
-                        child: const Text('Fetch data'),
+                        child: const Icon(Icons.refresh),
                       ),
-                      Text('User List'),
+                      SizedBox(
+                        height: 16,
+                      ),
                       content,
                     ],
                   ),
@@ -138,7 +159,7 @@ class _HomePageState extends State<HomePage> {
             builder: (context, scrollController) {
               if (!scrollController.hasClients) {
                 return ClipRRect(
-                  borderRadius: BorderRadius.only(
+                  borderRadius: const BorderRadius.only(
                     topLeft: Radius.circular(16),
                     topRight: Radius.circular(16),
                   ),
@@ -158,7 +179,7 @@ class _HomePageState extends State<HomePage> {
               } else {
                 if (scrollController.position.viewportDimension > 200) {
                   return ClipRRect(
-                    borderRadius: BorderRadius.only(
+                    borderRadius: const BorderRadius.only(
                       topLeft: Radius.circular(16),
                       topRight: Radius.circular(16),
                     ),
@@ -177,12 +198,12 @@ class _HomePageState extends State<HomePage> {
                   );
                 } else {
                   return ClipRRect(
-                    borderRadius: BorderRadius.only(
+                    borderRadius: const BorderRadius.only(
                       topLeft: Radius.circular(16),
                       topRight: Radius.circular(16),
                     ),
                     child: Container(
-                      color: Colors.red,
+                      color: Colors.blueAccent,
                       child: ListView.builder(
                         controller: scrollController,
                         itemCount: 10,

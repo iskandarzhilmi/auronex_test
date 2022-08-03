@@ -40,7 +40,7 @@ class HomeLoaded extends HomeState {}
 class HomeError extends HomeState {
   final String error;
 
-  HomeError({required this.error});
+  const HomeError({required this.error});
 
   @override
   List<Object> get props => [error];

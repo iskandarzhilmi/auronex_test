@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:bloc/bloc.dart';
 import 'package:bot_toast/bot_toast.dart';
 import 'package:dio/dio.dart';
@@ -26,6 +28,9 @@ class LoginBloc extends Bloc<LoginEvent, LoginStateModel> {
         'password': event.password,
       });
 
+      log(result.toString());
+      BotToast.showText(text: 'Login success');
+
       emit(
         state.copyWith(
           loginState: LoginAuthenticated(),
@@ -35,6 +40,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginStateModel> {
       emit(state.copyWith(
         loginState: LoginError(error: 'Login failed'),
       ));
+      log(e.toString());
       BotToast.showText(text: 'Login failed');
     } finally {
       BotToast.closeAllLoading();

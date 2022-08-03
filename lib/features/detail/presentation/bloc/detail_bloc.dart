@@ -30,6 +30,7 @@ class DetailBloc extends Bloc<DetailEvent, DetailStateModel> {
         data: event.user.toJson(),
       );
       log(result.toString());
+      BotToast.showText(text: 'Update success');
       emit(
         state.copyWith(
           state: DetailSuccess(),
@@ -38,10 +39,10 @@ class DetailBloc extends Bloc<DetailEvent, DetailStateModel> {
     } catch (e) {
       emit(
         state.copyWith(
-          state: DetailFailed(error: 'Save user failed'),
+          state: const DetailFailed(error: 'Update user failed'),
         ),
       );
-      BotToast.showText(text: 'Save user failed');
+      BotToast.showText(text: 'Update user failed');
     } finally {
       BotToast.closeAllLoading();
     }
@@ -64,6 +65,8 @@ class DetailBloc extends Bloc<DetailEvent, DetailStateModel> {
 
       log(result.toString());
 
+      BotToast.showText(text: 'Create user success');
+
       emit(
         state.copyWith(
           state: DetailSuccess(),
@@ -72,10 +75,10 @@ class DetailBloc extends Bloc<DetailEvent, DetailStateModel> {
     } catch (e) {
       emit(
         state.copyWith(
-          state: DetailFailed(error: 'Save user failed'),
+          state: const DetailFailed(error: 'Create user failed'),
         ),
       );
-      BotToast.showText(text: 'Save user failed');
+      BotToast.showText(text: 'Create user failed');
     } finally {
       BotToast.closeAllLoading();
     }
