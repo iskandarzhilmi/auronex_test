@@ -5,6 +5,7 @@ import 'package:bot_toast/bot_toast.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import 'features/detail/presentation/bloc/detail_bloc.dart';
 import 'features/home/presentation/pages/home_page.dart';
 import 'features/presentation/bloc/login_bloc.dart';
 import 'features/presentation/pages/login_page.dart';
@@ -26,6 +27,9 @@ class MyApp extends StatelessWidget {
         ),
         BlocProvider(
           create: (context) => HomeBloc(),
+        ),
+        BlocProvider(
+          create: (context) => DetailBloc(),
         ),
       ],
       child: BlocListener<LoginBloc, LoginStateModel>(

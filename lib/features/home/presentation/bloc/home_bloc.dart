@@ -2,6 +2,7 @@ import 'dart:developer';
 
 import 'package:auronex_test/features/home/data/models/user_model.dart';
 import 'package:bloc/bloc.dart';
+import 'package:bot_toast/bot_toast.dart';
 import 'package:dio/dio.dart';
 import 'package:equatable/equatable.dart';
 
@@ -65,11 +66,10 @@ class HomeBloc extends Bloc<HomeEvent, HomeStateModel> {
       // var getResult =
       //     await Dio().get('https://auronex-test.firebaseio.com/user');
 
+      BotToast.showText(text: 'Delete successful.');
       emit(
         state.copyWith(
           homeState: HomeLoaded(),
-          // userList:
-          //     state.userList!.where((item) => item.id != event.id).toList(),
           userList: getResult.data['data']
               .map<UserModel>((item) => UserModel.fromJson(item))
               .toList(),
@@ -79,6 +79,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeStateModel> {
       emit(state.copyWith(
         homeState: HomeError(error: e.toString()),
       ));
+      BotToast.showText(text: 'Delete failed.');
       // BotToast.showText(text: e.toString());
     } finally {
       // BotToast.closeAllLoading();

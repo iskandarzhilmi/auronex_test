@@ -33,9 +33,9 @@ class LoginBloc extends Bloc<LoginEvent, LoginStateModel> {
       );
     } catch (e) {
       emit(state.copyWith(
-        loginState: LoginError(error: e.toString()),
+        loginState: LoginError(error: 'Login failed'),
       ));
-      BotToast.showText(text: e.toString());
+      BotToast.showText(text: 'Login failed');
     } finally {
       BotToast.closeAllLoading();
     }

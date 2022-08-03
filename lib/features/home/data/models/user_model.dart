@@ -7,11 +7,11 @@ class UserModel {
     required this.avatar,
   });
 
-  final int id;
-  final String firstName;
-  final String lastName;
-  final String email;
-  final String avatar;
+  int id;
+  String firstName;
+  String lastName;
+  String email;
+  String avatar;
 
   factory UserModel.fromJson(Map<String, dynamic> json) => UserModel(
         id: json['id'],

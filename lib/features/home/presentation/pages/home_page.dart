@@ -4,6 +4,7 @@ import 'package:auronex_test/features/home/presentation/bloc/home_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../detail/presentation/pages/detail_page.dart';
 import '../../../presentation/bloc/login_bloc.dart';
 import '../../../presentation/pages/login_page.dart';
 
@@ -60,7 +61,16 @@ class _HomePageState extends State<HomePage> {
                         mainAxisSize: MainAxisSize.min,
                         children: [
                           IconButton(
-                            onPressed: () {},
+                            onPressed: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => DetailPage(
+                                    user: user,
+                                  ),
+                                ),
+                              );
+                            },
                             icon: Icon(
                               Icons.edit,
                               color: Colors.blue,
@@ -123,8 +133,8 @@ class _HomePageState extends State<HomePage> {
             },
           ),
           DraggableScrollableSheet(
-            minChildSize: 0.2,
-            initialChildSize: 0.7,
+            minChildSize: 0.1,
+            initialChildSize: 0.2,
             builder: (context, scrollController) {
               if (!scrollController.hasClients) {
                 return ClipRRect(
